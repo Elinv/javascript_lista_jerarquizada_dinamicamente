@@ -1,0 +1,89 @@
+body {
+  background-image: linear-gradient(
+    to right top,
+    #051937,
+    #004d7a,
+    #008793,
+    #00bf72,
+    #a8eb12
+  );
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url("Search-icon.png");
+  background-position: 2px 2px;
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+p ul li a {
+  border: 1px solid rgb(255, 0, 242);
+  /*margin-top: -5px;*/
+  margin-left: 35px;
+  margin-right: 35px;
+  /* Prevent double borders */
+  background-color: #750606;
+  /*padding-top: 0px;
+  padding-bottom: 0px;*/
+  padding-left: 40px;
+  text-decoration: none;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  display: block;
+}
+
+p ul li a:hover:not(.header) {
+  background-color: rgb(185, 164, 41);
+  color: rgb(0, 4, 255);
+}
+
+#tituloElinv {
+  color: #a7dd3c;
+  text-shadow: 2px 0 0px #800040, 3px 2px 0px rgba(77, 0, 38, 0.5),
+    3px 0 3px #ff002b, 5px 0 3px #800015, 6px 2px 3px rgba(77, 0, 13, 0.5),
+    6px 0 9px #ff5500, 8px 0 9px #802a00, 9px 2px 9px rgba(77, 25, 0, 0.5),
+    9px 0 18px #ffd500, 11px 0 18px #806a00, 12px 2px 18px rgba(77, 66, 0, 0.5),
+    12px 0 30px #d4ff00, 14px 0 30px #6a8000, 15px 2px 30px rgba(64, 77, 0, 0.5),
+    15px 0 45px #80ff00, 17px 0 45px #408000, 17px 2px 45px rgba(38, 77, 0, 0.5);
+  color: #a7dd3c;
+}
+
+.buttonElinv {
+  box-shadow: 0px 1px 0px 0px #f0f7fa;
+  background: linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+  background-color: #33bdef;
+  border-radius: 6px;
+  border: 1px solid #057fd0;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px -1px 0px #5b6178;
+}
+.buttonElinv:hover {
+  background: linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+  background-color: #019ad2;
+}
+.buttonElinv:active {
+  position: relative;
+  top: 1px;
+}

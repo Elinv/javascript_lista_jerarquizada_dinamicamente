@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./files/estiloCSS.css">
+
+    <script src="./files/shortCut.js"></script>
+
+    <title>Blender short cut por Elinv</title>
+
+</head>
+
+<body contenteditable="false">
+    <center>
+    <h1 id="tituloElinv">Blender ShortCut por Elinv</h1>
+    <button class="buttonElinv" type="button" onclick="blenderShortCutElinv.clearLStorage()">Reiniciar Short Cut Elinv</button>
+    </center>
+    <hr>
+
+    <input type="text" id="myInput" onkeyup="blenderShortCutElinv.filtrarShortCut()" placeholder="Search for text.."
+        title="Type text" value="">
+
+    <p id="listShortCut"></p>
+
+    <script>
+        var blenderShortCutElinv = {
+            clearLStorage: function () {
+                localStorage.clear();
+            },
+            filtrarShortCut: function () {
+                var input, filter, ul, li, a, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                ul = document.getElementById("myUL");
+                li = ul.getElementsByTagName("li");
+                for (i = 0; i < li.length; i++) {
+                    a = li[i].getElementsByTagName("a")[0];
+                    txtValue = a.textContent || a.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "block";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            },
+            // cargar datos en vista html
+            leerDatos: function (mostrar) {
+                // Obtengo el string previamente salvado y luego
+                var guardado = localStorage.getItem('datos');
+                // json objeto parse
+                var json = JSON.parse(guardado);
+                arrGlobalElinv = this.jsonArrayTo2D(json);
+                // CREAMOS EL LISTADO
+                this.listArr(arrGlobalElinv, mostrar);
+                // asignar eventos al listado
+                this.eventos();
+            },
+            // funcion convierte array json to array javascript
+            jsonArrayTo2D: function (jsonObj) {
+                var arr = [];
+                for (var i = 0, len = jsonObj.length, tmp; i < len; i++) {
+                    tmp = [];
+                    for (var k in jsonObj[i]) {
+                        if (jsonObj[i].hasOwnProperty(k)) {
+                            tmp.push(jsonObj[i][k]);
+                        }
+                    }
+                    arr.push(tmp);
+                }
+                return arr;
+            },            
+            // funcion para listar array
+            listArr: function (arr, mostrar) {
+                var ul = document.createElement('UL');
+                ul.setAttribute('id', 'myUL');
+                //ul.setAttribute('class', 'list-class');
+                for (var i = 0, len = arr.length; i < len; i++) {
+                    var li = document.createElement("LI");
+                    //li.setAttribute('class', 'liClase');
+                    // solo se oculta en la primer carga o si se refresca la pagina
+                    if (mostrar) {
+                        li.setAttribute('style', 'display:none');
+                    }
+                    // cada linea de ayuda shortCut
+                    let linea = "<a href='#'><pre>" + arr[i][0] + "<span style='color:blue; float: right;'><b>~{" + i + "}~</b></span><span style='color:green; float: right;'><b>" + arr[i][1] + "</b></span></pre></a>";
+                    linea = linea.replace("/&lt;/g", "<");
+                    linea = linea.replace("/&gt;/g", ">");
+                    li.innerHTML = linea;
+                    //console.log(li.outerHTML);
+                    ul.appendChild(li);
+                }
+                document.getElementById('listShortCut').innerHTML = "";
+                document.getElementById("listShortCut").appendChild(ul);
+            },
+            // asigna eventos al listado
+            eventos:function () {
+                // detect click en elemento del listado y suma +1
+                var list = document.querySelector('#myUL');
+                this.addEvent(list, 'click', function (e) {
+                    e = e || window.event;
+                    var el = e.target || e.srcElement;
+                    var indice = el.innerHTML;
+                    var indice = indice.match(/~{(.*)}~/);
+                    // a este elemento del array le sumamos + 1
+                    let i = indice[1];
+                    arrGlobalElinv[i][1] = parseInt(arrGlobalElinv[i][1]) + 1;
+                    // ordenamos el array por la columna 2
+                    arrGlobalElinv = arrGlobalElinv.sort(function (a, b) {
+                        return a[1] - b[1]
+                    });
+                    // ponemos de mayor a menor
+                    arrGlobalElinv.reverse();
+
+                    // Guardo el objeto como un string
+                    localStorage.setItem('datos', JSON.stringify(arrGlobalElinv));
+                    // Cargamos los datos desde el storage
+                    blenderShortCutElinv.leerDatos(false);
+                });
+            },
+            hola: function(){
+                console.log(arrGlobalElinv);
+            },
+            //evento click en cada elemento de la lista
+            addEvent:function (elem, event, fn) {
+                if (elem.addEventListener) {
+                    elem.addEventListener(event, fn, false);
+                }
+                else {
+                    elem.attachEvent("on" + event, function () {
+                        return (fn.call(elem, window.event));
+                    });
+                }
+            },
+            // Ponemos estilo a las teclas abreviadas.
+            replaceEstilo:function () {
+                for (var i = 0; i < shortCutList.length; i++) {
+                    shortCutList[i][0] = shortCutList[i][0].replace("scestilo", "<span style='color:cyan'><b>");
+                    shortCutList[i][0] = shortCutList[i][0].replace("scestiloEnd", "</b></span'>");
+                }
+            }                        
+        };
+        window.onload = function () {
+            // solo se ejecuta si no existe
+            if (localStorage.getItem("datos") === null) {
+                blenderShortCutElinv.replaceEstilo();
+                // Guardo el objeto como un string
+                localStorage.setItem('datos', JSON.stringify(shortCutList));
+            }
+            // Cargamos los datos desde el storage
+            blenderShortCutElinv.leerDatos(true);
+        };
+
+    </script>
+
+</body>
+
+</html>
