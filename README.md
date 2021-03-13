@@ -12,7 +12,7 @@
 
 ![elinv help](./readme/blender_short_cut_en_Blogger.png)
 
-**Al correr el cursor en el cuadro de busqueda se mostrará todo si es un espacio en blanco o se preciosa la tecla retroceso o se busca algún contenido mediante su tipeo:**
+**Al correr el cursor en el cuadro de busqueda se mostrará todo si es un espacio en blanco o se presiona la tecla retroceso o se busca algún contenido mediante su tipeo:**
 
 *A medida que se hace click intencionalmente en los item hallados, los mismos se van posicionando en primer lugar y de acuerdo a la cantidad de click*
 

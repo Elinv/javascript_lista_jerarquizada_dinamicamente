@@ -1,5 +1,3 @@
-var arrGlobalElinv = [];
-
 let estilo = '<span style="color:red"><b>';
 
 shortCutList = [
